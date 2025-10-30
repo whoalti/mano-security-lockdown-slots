@@ -1,5 +1,42 @@
 @import "tailwindcss";
 
+:root {
+  --color-bg-deep: #0a0e1a;
+  --color-bg-mid: #16213e;
+  --color-bg-light: #1a1a2e;
+  --color-text: #f3f4f6;
+
+  --color-accent-primary: #ca8a04;
+  --color-accent-primary-dark: #854d0e;
+  --color-accent-primary-glow: #eab308;
+  --color-accent-secondary: #a855f7;
+
+  --rgb-accent-primary-glow: 234, 179, 8;
+  --rgb-accent-secondary: 168, 85, 247;
+  --rgb-shadow: 0, 0, 0;
+
+  --slot-size: 100px;
+  --slot-radius: 16px;
+  --slot-border-width: 3px;
+  --slot-inner-padding: 2px;
+  --slot-radius-inner: calc(var(--slot-radius) - var(--slot-inner-padding));
+  --slot-font-size: 3.5rem;
+
+  --slot-spin-duration: 1.1s;
+  --slot-appearance-duration: 0.6s;
+  --ease-out-back-strong: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --scrollbar-width: 12px;
+  --scrollbar-radius: 6px;
+  --scrollbar-border-width: 2px;
+}
+
+body {
+  background: linear-gradient(135deg, var(--color-bg-deep) 0%, var(--color-bg-mid) 50%, var(--color-bg-light) 100%);
+  background-attachment: fixed;
+  color: var(--color-text);
+}
+
 @keyframes slot-fall {
   0% {
     transform: translateY(-50%);
@@ -12,14 +49,40 @@
 .slot-window {
   position: relative;
   overflow: hidden;
-  width: 64px;
-  height: 64px;
-  border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background: white;
+  width: var(--slot-size);
+  height: var(--slot-size);
+  border-radius: var(--slot-radius);
+  border: var(--slot-border-width) solid var(--color-accent-primary);
+  background: linear-gradient(135deg, var(--color-bg-light) 0%, var(--color-bg-mid) 100%);
+  box-shadow: 
+    inset 0 4px 12px rgba(var(--rgb-shadow) / 0.8),
+    0 0 20px rgba(var(--rgb-accent-primary-glow) / 0.3),
+    0 0 40px rgba(var(--rgb-accent-primary-glow) / 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.slot-window::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--slot-radius-inner);
+  padding: var(--slot-inner-padding);
+  background: linear-gradient(135deg, rgba(var(--rgb-accent-primary-glow) / 0.4) 0%, rgba(var(--rgb-accent-secondary) / 0.3) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.6;
+}
+
+.slot-window:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    inset 0 4px 12px rgba(var(--rgb-shadow) / 0.8),
+    0 0 30px rgba(var(--rgb-accent-primary-glow) / 0.5),
+    0 0 60px rgba(var(--rgb-accent-primary-glow) / 0.25);
 }
 
 .slot-reel {
@@ -27,33 +90,55 @@
   flex-direction: column;
   align-items: center;
   animation-name: slot-fall;
-  animation-duration: var(--duration, 1.1s);
+  animation-duration: var(--slot-spin-duration);
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   will-change: transform;
 }
 
 .slot-cell {
-  width: 64px;
-  height: 64px;
+  width: var(--slot-size);
+  height: var(--slot-size);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
+  font-size: var(--slot-font-size);
   line-height: 1;
+  filter: drop-shadow(0 2px 8px rgba(var(--rgb-shadow) / 0.5));
 }
 
 .slot-cell--appearance {
-  animation: slot-appearance 1s ease-in-out;
+  animation: slot-appearance var(--slot-appearance-duration) var(--ease-out-back-strong);
 }
 
 @keyframes slot-appearance {
   0% {
     opacity: 0;
-    transform: translateY(-100%);
+    transform: translateY(-100%) scale(0.5) rotate(-10deg);
+  }
+  50% {
+    transform: translateY(0) scale(1.2) rotate(5deg);
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1) rotate(0deg);
   }
+}
+
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--color-accent-primary) 0%, var(--color-accent-primary-dark) 100%);
+  border-radius: var(--scrollbar-radius);
+  border: var(--scrollbar-border-width) solid var(--color-bg-deep);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--color-accent-primary-glow) 0%, var(--color-accent-primary) 100%);
 }

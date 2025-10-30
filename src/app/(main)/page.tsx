@@ -1,11 +1,16 @@
 import {Game} from "@/components/Game";
-import Image from "next/image";
+import {Rules} from "@/components/Rules";
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <h1 className="text-4xl font-bold">Lockdown Casino</h1>
-      <Game />
+    <div className="min-h-screen w-full flex flex-col items-center justify-center gap-8 p-6">
+      <h1 className="text-4xl font-extrabold tracking-tight">
+        Lockdown Casino
+      </h1>
+      <div className="w-full max-w-3xl mx-auto flex flex-col items-center gap-8">
+        <Game />
+        <Rules />
+      </div>
     </div>
   );
 }

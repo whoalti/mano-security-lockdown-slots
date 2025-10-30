@@ -11,7 +11,6 @@ export default function MainLayout({
   children: React.ReactNode;
 }>) {
   const savePendingRoll = () => {
-    console.log("savePendingRoll");
     const state = useUserStore.getState();
     if (state.pendingRollResult) {
       state.applyPendingRollResult();

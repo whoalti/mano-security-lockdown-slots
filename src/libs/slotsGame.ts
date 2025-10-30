@@ -63,7 +63,6 @@ export class SlotsGame {
     const roll = this.rollHelper();
     if (roll.isWinningCombination) {
       if (this.getIfShouldCheat(creditAmount)) {
-        console.log("cheating", roll.symbols);
         return this.rollHelper();
       }
     }
