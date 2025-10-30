@@ -1,5 +1,6 @@
 import {prizeToValueMap} from "@/constants";
 import {CheatThresholds} from "@/constants/cheat-thresholds";
+import {SLOTS_COUNT} from "@/constants/slots";
 import {Prizes} from "@/types";
 import seedrandom from "seedrandom";
 
@@ -24,7 +25,7 @@ export class SlotsGame {
   }
 
   generateRandomSymbols(): Prizes[] {
-    return Array.from({length: 3}, () => this.generateRandomSymbol());
+    return Array.from({length: SLOTS_COUNT}, () => this.generateRandomSymbol());
   }
 
   isWinningCombination(symbols: Prizes[]): boolean {
